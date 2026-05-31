@@ -172,10 +172,20 @@ const guestsData = [
 ];
 
 const TABLE_COLORS = {
-  1: { bg: "#1a2236", accent: "#c9a84c", light: "#e8d5a3" },
+  1: { bg: "#1a2236", accent: "#b67c52", light: "#e8d5a3" },
   2: { bg: "#1c2131", accent: "#8fb3c9", light: "#c5dce8" },
   3: { bg: "#1e1e2e", accent: "#c97c8c", light: "#e8b8c2" },
   4: { bg: "#1b2420", accent: "#7ac996", light: "#b8e8c8" },
+};
+
+const EVENT_DETAILS = {
+  bride: "Mariam Zuha",
+  groom: "Mohamed Nafly",
+  date: "Sunday · June 07 2026",
+  time: "From 06.30 PM Onwards",
+  venue: "The Clairemont",
+  location: "53 Raymond St, Bankstown NSW 2200",
+  quote: "Barakallahu Laka Wa Baraka Alaika Wajama’a Bainakuma Fi Khair",
 };
 
 export default function App() {
@@ -226,10 +236,19 @@ export default function App() {
 
   const highlightMatch = (text, search) => {
     if (!search.trim()) return text;
-    const regex = new RegExp(`(${search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    const regex = new RegExp(
+      `(${search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+      "gi",
+    );
     const parts = text.split(regex);
-    return parts.map((part, i) => 
-      regex.test(part) ? <span key={i} style={{ color: '#c9a84c', fontWeight: '600' }}>{part}</span> : part
+    return parts.map((part, i) =>
+      regex.test(part) ? (
+        <span key={i} style={{ color: "#b67c52", fontWeight: "600" }}>
+          {part}
+        </span>
+      ) : (
+        part
+      ),
     );
   };
 
@@ -251,13 +270,21 @@ export default function App() {
     }
   };
 
-  const accent = selectedGuest ? TABLE_COLORS[selectedGuest.table]?.accent || "#c9a84c" : "#c9a84c";
-  const lightAccent = selectedGuest ? TABLE_COLORS[selectedGuest.table]?.light || "#e8d5a3" : "#e8d5a3";
+  const accent = selectedGuest
+    ? TABLE_COLORS[selectedGuest.table]?.accent || "#b67c52"
+    : "#b67c52";
+  const lightAccent = selectedGuest
+    ? TABLE_COLORS[selectedGuest.table]?.light || "#e8d5a3"
+    : "#e8d5a3";
 
   return (
     <div style={styles.root}>
       {/* Decorative background */}
-      <svg style={styles.bgSvg} viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice">
+      <svg
+        style={styles.bgSvg}
+        viewBox="0 0 800 800"
+        preserveAspectRatio="xMidYMid slice"
+      >
         <defs>
           <radialGradient id="rg1" cx="30%" cy="20%" r="60%">
             <stop offset="0%" stopColor="#1e2a4a" />
@@ -274,23 +301,32 @@ export default function App() {
         {[...Array(6)].map((_, i) => (
           <circle
             key={i}
-            cx="400" cy="400"
+            cx="400"
+            cy="400"
             r={100 + i * 80}
             fill="none"
-            stroke="#c9a84c"
+            stroke="#b67c52"
             strokeWidth="0.4"
             strokeOpacity={0.06 - i * 0.008}
           />
         ))}
         {/* Corner ornaments */}
-        <g opacity="0.12" stroke="#c9a84c" strokeWidth="1" fill="none">
+        <g opacity="0.12" stroke="#b67c52" strokeWidth="1" fill="none">
           <path d="M 30 30 L 30 80 M 30 30 L 80 30" />
           <path d="M 770 30 L 770 80 M 770 30 L 720 30" />
           <path d="M 30 770 L 30 720 M 30 770 L 80 770" />
           <path d="M 770 770 L 770 720 M 770 770 L 720 770" />
           {/* Diamond at each corner junction */}
-          {[[30,30],[770,30],[30,770],[770,770]].map(([x,y],i) => (
-            <path key={i} d={`M ${x} ${y-6} L ${x+6} ${y} L ${x} ${y+6} L ${x-6} ${y} Z`} />
+          {[
+            [30, 30],
+            [770, 30],
+            [30, 770],
+            [770, 770],
+          ].map(([x, y], i) => (
+            <path
+              key={i}
+              d={`M ${x} ${y - 6} L ${x + 6} ${y} L ${x} ${y + 6} L ${x - 6} ${y} Z`}
+            />
           ))}
         </g>
       </svg>
@@ -300,34 +336,60 @@ export default function App() {
         <header style={styles.header}>
           <div style={styles.ornamentLine}>
             <span style={styles.ornamentDot} />
-            <span style={{...styles.ornamentRule, background: `linear-gradient(90deg, transparent, #c9a84c40, #c9a84c, #c9a84c40, transparent)`}} />
-            <span style={{...styles.ornamentDiamond, color: "#c9a84c"}}>◆</span>
-            <span style={{...styles.ornamentRule, background: `linear-gradient(90deg, transparent, #c9a84c40, #c9a84c, #c9a84c40, transparent)`}} />
+            <span
+              style={{
+                ...styles.ornamentRule,
+                background: `linear-gradient(90deg, transparent, #c9a84c40, #b67c52, #c9a84c40, transparent)`,
+              }}
+            />
+            <span style={{ ...styles.ornamentDiamond, color: "#b67c52" }}>
+              ◆
+            </span>
+            <span
+              style={{
+                ...styles.ornamentRule,
+                background: `linear-gradient(90deg, transparent, #c9a84c40, #b67c52, #c9a84c40, transparent)`,
+              }}
+            />
             <span style={styles.ornamentDot} />
           </div>
 
-          <p style={styles.eyebrow}>TONIGHT'S EVENT · 7:00 PM</p>
+          <p style={styles.eyebrow}>{EVENT_DETAILS.date} · 6:30 PM</p>
           <h1 style={styles.title}>
-            <span style={styles.titleAmp}>The</span>
+            <span style={styles.titleAmp}>Wedding Of</span>
             <br />
-            Guest Finder
+            {EVENT_DETAILS.bride}
+            <br />
+            &
+            <br />
+            {EVENT_DETAILS.groom}
           </h1>
-          <p style={styles.subtitle}>
-            Discover your table assignment with grace
-          </p>
+          <p style={styles.subtitle}>Welcome to our wedding celebration</p>
 
           <div style={styles.ornamentLine}>
             <span style={styles.ornamentDot} />
-            <span style={{...styles.ornamentRule, background: `linear-gradient(90deg, transparent, #c9a84c40, #c9a84c, #c9a84c40, transparent)`}} />
-            <span style={{...styles.ornamentDiamond, color: "#c9a84c"}}>◆</span>
-            <span style={{...styles.ornamentRule, background: `linear-gradient(90deg, transparent, #c9a84c40, #c9a84c, #c9a84c40, transparent)`}} />
+            <span
+              style={{
+                ...styles.ornamentRule,
+                background: `linear-gradient(90deg, transparent, #c9a84c40, #b67c52, #c9a84c40, transparent)`,
+              }}
+            />
+            <span style={{ ...styles.ornamentDiamond, color: "#b67c52" }}>
+              ◆
+            </span>
+            <span
+              style={{
+                ...styles.ornamentRule,
+                background: `linear-gradient(90deg, transparent, #c9a84c40, #b67c52, #c9a84c40, transparent)`,
+              }}
+            />
             <span style={styles.ornamentDot} />
           </div>
 
           <div style={styles.metaRow}>
-            <span style={styles.metaBadge}>{guestsData.length} Guests</span>
+            <span style={styles.metaBadge}>{EVENT_DETAILS.venue}</span>
             <span style={styles.metaSep}>·</span>
-            <span style={styles.metaBadge}>{Object.keys(tableStats).length} Tables</span>
+            <span style={styles.metaBadge}>BANKSTOWN NSW</span>
           </div>
         </header>
 
@@ -335,7 +397,13 @@ export default function App() {
         <section style={styles.searchSection}>
           <div style={styles.searchWrapper}>
             <div style={styles.searchBorder}>
-              <svg style={styles.searchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <svg
+                style={styles.searchIcon}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+              >
                 <circle cx="11" cy="11" r="7" />
                 <path d="M21 21l-4.35-4.35" strokeLinecap="round" />
               </svg>
@@ -357,10 +425,17 @@ export default function App() {
               />
               {search && (
                 <button
-                  onClick={() => { setSearch(""); setSelectedGuest(null); setRevealed(false); inputRef.current?.focus(); }}
+                  onClick={() => {
+                    setSearch("");
+                    setSelectedGuest(null);
+                    setRevealed(false);
+                    inputRef.current?.focus();
+                  }}
                   style={styles.clearBtn}
                   aria-label="Clear"
-                >✕</button>
+                >
+                  ✕
+                </button>
               )}
             </div>
 
@@ -373,29 +448,41 @@ export default function App() {
                     onMouseDown={() => handleSelect(guest)}
                     style={{
                       ...styles.dropdownItem,
-                      background: focusedIndex === i ? "rgba(201,168,76,0.1)" : "transparent",
-                      borderLeft: focusedIndex === i ? "2px solid #c9a84c" : "2px solid transparent",
+                      background:
+                        focusedIndex === i
+                          ? "rgba(201,168,76,0.1)"
+                          : "transparent",
+                      borderLeft:
+                        focusedIndex === i
+                          ? "2px solid #b67c52"
+                          : "2px solid transparent",
                     }}
                   >
                     <span style={styles.dropdownAvatar}>
                       {guest.name.charAt(0)}
                     </span>
-                    <span style={styles.dropdownName}>{highlightMatch(guest.name, search)}</span>
-                    <span style={styles.dropdownTable}>Table {guest.table}</span>
+                    <span style={styles.dropdownName}>
+                      {highlightMatch(guest.name, search)}
+                    </span>
+                    <span style={styles.dropdownTable}>
+                      Table {guest.table}
+                    </span>
                   </button>
                 ))}
               </div>
             )}
 
             {/* No results */}
-            {showSuggestions && search.trim() && filteredGuests.length === 0 && (
-              <div style={styles.dropdown}>
-                <div style={styles.noResults}>
-                  <span style={styles.noResultsIcon}>✦</span>
-                  <span>No guest found — please contact the event host</span>
+            {showSuggestions &&
+              search.trim() &&
+              filteredGuests.length === 0 && (
+                <div style={styles.dropdown}>
+                  <div style={styles.noResults}>
+                    <span style={styles.noResultsIcon}>✦</span>
+                    <span>No guest found — please contact the event host</span>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
           </div>
         </section>
 
@@ -405,37 +492,64 @@ export default function App() {
             style={{
               ...styles.resultSection,
               opacity: revealed ? 1 : 0,
-              transform: revealed ? "translateY(0) scale(1)" : "translateY(16px) scale(0.98)",
+              transform: revealed
+                ? "translateY(0) scale(1)"
+                : "translateY(16px) scale(0.98)",
               transition: "opacity 0.5s ease, transform 0.5s ease",
             }}
           >
-            <div style={{
-              ...styles.resultCard,
-              borderColor: `${accent}50`,
-              boxShadow: `0 0 60px ${accent}18, 0 8px 32px rgba(0,0,0,0.5)`,
-            }}>
+            <div
+              style={{
+                ...styles.resultCard,
+                borderColor: `${accent}50`,
+                boxShadow: `0 0 60px ${accent}18, 0 8px 32px rgba(0,0,0,0.5)`,
+              }}
+            >
               {/* Corner ornaments */}
               <CornerOrnament pos="tl" color={accent} />
               <CornerOrnament pos="tr" color={accent} />
               <CornerOrnament pos="bl" color={accent} />
               <CornerOrnament pos="br" color={accent} />
 
-              <div style={{...styles.tableNumberBadge, background: accent, boxShadow: `0 4px 20px ${accent}60`}}>
+              <div
+                style={{
+                  ...styles.tableNumberBadge,
+                  background: accent,
+                  boxShadow: `0 4px 20px ${accent}60`,
+                }}
+              >
                 <span style={styles.tableNumberLabel}>TABLE</span>
                 <span style={styles.tableNumber}>{selectedGuest.table}</span>
               </div>
 
-              <p style={{...styles.resultGreeting, color: lightAccent}}>Welcome</p>
+              <p style={{ ...styles.resultGreeting, color: lightAccent }}>
+                Welcome
+              </p>
               <h2 style={styles.resultName}>{selectedGuest.name}</h2>
 
-              <div style={{...styles.resultDivider, background: `linear-gradient(90deg, transparent, ${accent}, transparent)`}} />
+              <div
+                style={{
+                  ...styles.resultDivider,
+                  background: `linear-gradient(90deg, transparent, ${accent}, transparent)`,
+                }}
+              />
 
               <p style={styles.resultMessage}>
-                Your seat is reserved and waiting.<br/>
-                Please proceed to enjoy the evening.
+                Thank you for joining the wedding celebration of
+                <br />
+                {EVENT_DETAILS.bride} & {EVENT_DETAILS.groom}
+                <br />
+                <br />
+                Venue: {EVENT_DETAILS.venue}
               </p>
 
-              <div style={{...styles.resultTag, borderColor: `${accent}40`, color: accent}}>
+              <div
+                style={{
+                  ...styles.resultTag,
+                  borderColor: `${accent}40`,
+                  color: accent,
+                }}
+              >
                 ✓ Confirmed Guest
               </div>
             </div>
@@ -452,20 +566,27 @@ export default function App() {
               .sort(([a], [b]) => parseInt(a) - parseInt(b))
               .map(([table, count]) => {
                 const tColor = TABLE_COLORS[parseInt(table)] || TABLE_COLORS[1];
-                const isActive = selectedGuest && selectedGuest.table === parseInt(table);
+                const isActive =
+                  selectedGuest && selectedGuest.table === parseInt(table);
                 return (
                   <div
                     key={table}
                     style={{
                       ...styles.statCard,
-                      borderColor: isActive ? tColor.accent : "rgba(201,168,76,0.15)",
-                      boxShadow: isActive ? `0 0 24px ${tColor.accent}30` : "none",
+                      borderColor: isActive
+                        ? tColor.accent
+                        : "rgba(201,168,76,0.15)",
+                      boxShadow: isActive
+                        ? `0 0 24px ${tColor.accent}30`
+                        : "none",
                       background: isActive
                         ? `linear-gradient(135deg, ${tColor.bg}, rgba(10,14,26,0.95))`
                         : "rgba(255,255,255,0.02)",
                     }}
                   >
-                    <div style={{...styles.statTableNum, color: tColor.accent}}>
+                    <div
+                      style={{ ...styles.statTableNum, color: tColor.accent }}
+                    >
                       {table}
                     </div>
                     <div style={styles.statGuestCount}>
@@ -481,7 +602,13 @@ export default function App() {
                       />
                     </div>
                     {isActive && (
-                      <div style={{...styles.statYouBadge, color: tColor.accent, borderColor: tColor.accent}}>
+                      <div
+                        style={{
+                          ...styles.statYouBadge,
+                          color: tColor.accent,
+                          borderColor: tColor.accent,
+                        }}
+                      >
                         Your Table
                       </div>
                     )}
@@ -495,7 +622,7 @@ export default function App() {
         <footer style={styles.footer}>
           <div style={styles.footerLine} />
           <p style={styles.footerText}>
-            ◆ &nbsp; Wishing you a delightful evening &nbsp; ◆
+            ◆ &nbsp; {EVENT_DETAILS.quote} &nbsp; ◆
           </p>
         </footer>
       </div>
@@ -518,7 +645,8 @@ function CornerOrnament({ pos, color }) {
   const left = pos.endsWith("l");
   return (
     <svg
-      width="24" height="24"
+      width="24"
+      height="24"
       style={{
         position: "absolute",
         top: top ? 12 : "auto",
@@ -530,10 +658,18 @@ function CornerOrnament({ pos, color }) {
       viewBox="0 0 24 24"
     >
       <path
-        d={left
-          ? (top ? "M 2 14 L 2 2 L 14 2" : "M 2 10 L 2 22 L 14 22")
-          : (top ? "M 10 2 L 22 2 L 22 14" : "M 10 22 L 22 22 L 22 10")}
-        fill="none" stroke={color} strokeWidth="1.2"
+        d={
+          left
+            ? top
+              ? "M 2 14 L 2 2 L 14 2"
+              : "M 2 10 L 2 22 L 14 22"
+            : top
+              ? "M 10 2 L 22 2 L 22 14"
+              : "M 10 22 L 22 22 L 22 10"
+        }
+        fill="none"
+        stroke={color}
+        strokeWidth="1.2"
       />
     </svg>
   );
@@ -560,7 +696,8 @@ const styles = {
     zIndex: 1,
     maxWidth: 680,
     margin: "0 auto",
-    padding: "clamp(24px, 6vw, 48px) clamp(16px, 4vw, 24px) clamp(40px, 8vw, 64px)",
+    padding:
+      "clamp(24px, 6vw, 48px) clamp(16px, 4vw, 24px) clamp(40px, 8vw, 64px)",
   },
 
   // Header
@@ -578,7 +715,7 @@ const styles = {
     width: 4,
     height: 4,
     borderRadius: "50%",
-    background: "#c9a84c",
+    background: "#b67c52",
     opacity: 0.5,
     flexShrink: 0,
   },
@@ -594,7 +731,7 @@ const styles = {
     fontFamily: "'Cinzel', serif",
     fontSize: 10,
     letterSpacing: "0.3em",
-    color: "#c9a84c",
+    color: "#b67c52",
     opacity: 0.7,
     marginBottom: 16,
     marginTop: 4,
@@ -613,7 +750,7 @@ const styles = {
     fontStyle: "italic",
     fontWeight: 300,
     fontSize: "0.55em",
-    color: "#c9a84c",
+    color: "#b67c52",
     letterSpacing: "0.2em",
     display: "block",
   },
@@ -635,11 +772,11 @@ const styles = {
     fontFamily: "'Cinzel', serif",
     fontSize: 10,
     letterSpacing: "0.15em",
-    color: "#c9a84c",
+    color: "#b67c52",
     opacity: 0.6,
   },
   metaSep: {
-    color: "#c9a84c",
+    color: "#b67c52",
     opacity: 0.3,
   },
 
@@ -665,7 +802,7 @@ const styles = {
   searchIcon: {
     width: 18,
     height: 18,
-    color: "#c9a84c",
+    color: "#b67c52",
     opacity: 0.6,
     flexShrink: 0,
   },
@@ -726,7 +863,7 @@ const styles = {
     justifyContent: "center",
     fontFamily: "'Cinzel', serif",
     fontSize: "clamp(10px, 2.5vw, 12px)",
-    color: "#c9a84c",
+    color: "#b67c52",
     flexShrink: 0,
   },
   dropdownName: {
@@ -737,7 +874,7 @@ const styles = {
     fontFamily: "'Cinzel', serif",
     fontSize: "clamp(9px, 2vw, 10px)",
     letterSpacing: "0.1em",
-    color: "#c9a84c",
+    color: "#b67c52",
     opacity: 0.6,
   },
   noResults: {
@@ -751,7 +888,7 @@ const styles = {
     justifyContent: "center",
   },
   noResultsIcon: {
-    color: "#c9a84c",
+    color: "#b67c52",
     opacity: 0.4,
     fontSize: 12,
   },
@@ -767,7 +904,8 @@ const styles = {
     background: "rgba(10,14,26,0.95)",
     border: "1px solid",
     borderRadius: 4,
-    padding: "clamp(32px, 6vw, 48px) clamp(24px, 5vw, 40px) clamp(28px, 5vw, 40px)",
+    padding:
+      "clamp(32px, 6vw, 48px) clamp(24px, 5vw, 40px) clamp(28px, 5vw, 40px)",
     textAlign: "center",
     overflow: "hidden",
   },
@@ -846,7 +984,7 @@ const styles = {
     fontFamily: "'Cinzel', serif",
     fontSize: 10,
     letterSpacing: "0.3em",
-    color: "#c9a84c",
+    color: "#b67c52",
     opacity: 0.5,
   },
   statsGrid: {
@@ -857,7 +995,8 @@ const styles = {
   statCard: {
     border: "1px solid",
     borderRadius: 4,
-    padding: "clamp(16px, 3vw, 20px) clamp(16px, 3vw, 20px) clamp(12px, 2.5vw, 16px)",
+    padding:
+      "clamp(16px, 3vw, 20px) clamp(16px, 3vw, 20px) clamp(12px, 2.5vw, 16px)",
     transition: "border-color 0.4s, box-shadow 0.4s, background 0.4s",
   },
   statTableNum: {
@@ -904,14 +1043,15 @@ const styles = {
   },
   footerLine: {
     height: 1,
-    background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent)",
+    background:
+      "linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent)",
     marginBottom: 20,
   },
   footerText: {
     fontFamily: "'Cormorant Garamond', serif",
     fontStyle: "italic",
     fontSize: "clamp(13px, 3vw, 15px)",
-    color: "#c9a84c",
+    color: "#b67c52",
     opacity: 0.45,
     letterSpacing: "0.05em",
   },
